@@ -1,0 +1,33 @@
+---
+source: src/lib.rs
+expression: query
+---
+PREFIX wd: <http://www.wikidata.org/entity/> 
+PREFIX wdt: <http://www.wikidata.org/prop/direct/> 
+PREFIX wikibase: <http://wikiba.se/ontology#> 
+PREFIX schema: <http://schema.org/> 
+SELECT * 
+WHERE { 
+  VALUES ?vertex_00 { wd:Q346 }
+  VALUES ?vertex_02 { wd:Q295268 }
+  VALUES ?edge_00_01 { wdt:P22 wdt:P25 wdt:P26 wdt:P40 }
+  VALUES ?edge_01_02 { wdt:P22 wdt:P25 wdt:P26 wdt:P40 }
+  ?vertex_00 ?edge_00_01 ?vertex_01 .
+  ?vertex_01 ?edge_01_02 ?vertex_02 .
+  OPTIONAL { ?vertex_00 wdt:P569 ?vertex_00_birth_date }
+  OPTIONAL { ?vertex_00 wdt:P570 ?vertex_00_death_date }
+  OPTIONAL { ?vertex_00 wdt:P18 ?vertex_00_image_url }
+  ?vertex_00 schema:name ?vertex_00_name .
+  FILTER (lang(?vertex_00_name) = "en")
+  OPTIONAL { ?vertex_01 wdt:P569 ?vertex_01_birth_date }
+  OPTIONAL { ?vertex_01 wdt:P570 ?vertex_01_death_date }
+  OPTIONAL { ?vertex_01 wdt:P18 ?vertex_01_image_url }
+  ?vertex_01 schema:name ?vertex_01_name .
+  FILTER (lang(?vertex_01_name) = "en")
+  OPTIONAL { ?vertex_02 wdt:P569 ?vertex_02_birth_date }
+  OPTIONAL { ?vertex_02 wdt:P570 ?vertex_02_death_date }
+  OPTIONAL { ?vertex_02 wdt:P18 ?vertex_02_image_url }
+  ?vertex_02 schema:name ?vertex_02_name .
+  FILTER (lang(?vertex_02_name) = "en") 
+} 
+
